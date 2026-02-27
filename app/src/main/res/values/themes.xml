@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<<<<<<< HEAD
     <style name="Theme.MyApplication" parent="android:Theme.Material.Light.NoActionBar" />
+=======
+    <style name="Theme.VkEducationProject" parent="android:Theme.Material.Light.NoActionBar" />
+>>>>>>> 8c9eceb (First commit)
 </resources>

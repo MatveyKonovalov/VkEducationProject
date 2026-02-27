@@ -5,11 +5,19 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     namespace = "com.example.myapplication"
     compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.myapplication"
+=======
+    namespace = "com.example.vkeducationproject"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "com.example.vkeducationproject"
+>>>>>>> 8c9eceb (First commit)
         minSdk = 24
         targetSdk = 36
         versionCode = 1

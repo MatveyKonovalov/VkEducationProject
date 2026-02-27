@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
+<<<<<<< HEAD
 rootProject.name = "My Application"
+=======
+rootProject.name = "VkEducationProject"
+>>>>>>> 8c9eceb (First commit)
 include(":app")
  
