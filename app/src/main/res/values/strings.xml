@@ -1,7 +1,3 @@
 <resources>
-<<<<<<< HEAD
-    <string name="app_name">My Application</string>
-=======
     <string name="app_name">VkEducationProject</string>
->>>>>>> 8c9eceb (First commit)
 </resources>
