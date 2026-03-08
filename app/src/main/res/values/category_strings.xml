@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Категории для enum класса -->
+    <string name="category_name_finance">Финансы</string>
+    <string name="category_name_transport">Транспорт</string>
+    <string name="category_name_game">Игры</string>
+    <string name="category_name_tools">Инструменты</string>
+</resources>
