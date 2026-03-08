@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -61,4 +62,12 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:4.1.1")
     implementation("androidx.navigation:navigation-compose:2.9.7")
 
+    implementation("com.google.dagger:dagger:2.48")
+    kapt("com.google.dagger:dagger-compiler:2.48")
+
+    // Для Dagger Android (если используете)
+    implementation("com.google.dagger:dagger-android:2.48")
+    implementation("com.google.dagger:dagger-android-support:2.48")
+    kapt("com.google.dagger:dagger-android-processor:2.48")
+    implementation("androidx.navigation:navigation-compose")
 }

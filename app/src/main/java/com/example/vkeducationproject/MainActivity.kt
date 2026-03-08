@@ -4,43 +4,30 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.annotation.StringRes
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.vkeducationproject.ui.theme.VkEducationProjectTheme
-import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Canvas
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.style.LineHeightStyle
-import kotlin.io.path.Path
-import kotlin.io.path.moveTo
+import androidx.navigation.NavHostController
+import com.example.vkeducationproject.navigate.AppNavigation
+import com.example.vkeducationproject.navigate.AppViewModel
+import com.example.vkeducationproject.page.App
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,28 +36,32 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             VkEducationProjectTheme {
-
-                MainDisplay()
+                AppNavigation().NavigationGraph()
             }
         }
     }
 }
 @Composable
-fun MainDisplay(){
+fun MainDisplay(navController: NavHostController,
+                viewModel: AppViewModel){
     // Тестовые данные для отображения
     val data = makeData(
         titles = titles,
         descriptions = descriptions,
         categories = categories,
-        icons = urls )
+        icons = urls,
+        companies = companies,
+        ageRatings = ageRatings,
+        sizes = sizes)
+    val appIds = data.map{app -> viewModel.addInRepository(app)}.toList()
     Column{
         ShowTitleRuStore()
-        ShowScrollAppsColumn(data)
+        ShowScrollAppsColumn(data, appIds, navController)
     }
 
 }
 @Composable
-fun ShowScrollAppsColumn(data: List<AppString>){
+fun ShowScrollAppsColumn(data: List<App>, appsId: List<String>, navController: NavHostController){
     // Делаю изгиб с помощью двух Box
     Box(
         modifier = Modifier
@@ -89,8 +80,11 @@ fun ShowScrollAppsColumn(data: List<AppString>){
                     .fillMaxSize()
                     .background(Color.White))
             {
-                items(data){app ->
-                    app.ShowAppPage()
+                items(data.indices.toList()){appIndex ->
+                    ShowAppPage(
+                        app = data[appIndex],
+                        appInd = appsId[appIndex],
+                        navController = navController)
                 }
             }
         }
@@ -111,7 +105,7 @@ fun ShowTitleRuStore(){
             Icon(
                 imageVector = Icons.Filled.Menu,
                 modifier = Modifier.padding(10.dp),
-                contentDescription = "Избранное", // Для доступности (accessibility)
+                contentDescription = "Избранное",
                 tint = Color.White // Цвет иконки
             )
 
@@ -136,14 +130,20 @@ fun ShowTitleRuStore(){
 fun makeData(titles: List<String>,
              descriptions: List<String>,
              icons: List<String>,
-             categories: List<Category>): List<AppString>
+             categories: List<Category>,
+             companies: List<String>,
+             ageRatings: List<Int>,
+             sizes: List<Float>): List<App>
 {
     return titles.mapIndexed { index, string ->
-        AppString(
-            title=string,
+        App(
+            name=string,
             iconUrl = icons[index],
             description = descriptions[index],
-            category=categories[index]) }.toList()
+            category=categories[index],
+            developer = companies[index],
+            ageRating = ageRatings[index],
+            size = sizes[index])}.toList()
 }
 
 

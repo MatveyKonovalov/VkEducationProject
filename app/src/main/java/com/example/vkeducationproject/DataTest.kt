@@ -9,6 +9,33 @@ val titles = listOf(
     "Яндекс - с Алисой",
     "Вконтакте")
 
+val companies = listOf(
+    "Сбер",
+    "Яндекс",
+    "Mail.ru",
+    "Яндекс",
+    "МТС",
+    "Яндекс",
+    "Vk"
+)
+val ageRatings = listOf(
+    12,
+    6,
+    12,
+    16,
+    18,
+    6,
+    0
+)
+val sizes = listOf(
+    150f,
+    169.5f,
+    45f,
+    20f,
+    190f,
+    69f,
+    159f
+)
 val categories = listOf(
     Category.FINANCE,
     Category.TOOLS,
