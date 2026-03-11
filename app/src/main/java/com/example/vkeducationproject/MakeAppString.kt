@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.vkeducationproject.page.App
+import com.example.vkeducationproject.page.AppWithId
 
 
 @Composable
@@ -50,7 +51,7 @@ private fun ShowDescription(app: App){
     }
 }
 @Composable
-fun ShowAppPage(app: App, appInd: String, navController: NavHostController){
+fun ShowAppPage(app: AppWithId, navController: NavHostController){
     Row(horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -60,11 +61,11 @@ fun ShowAppPage(app: App, appInd: String, navController: NavHostController){
             .shadow(1.dp, spotColor = Color(0xFFD3D3D3))
             .padding(start=10.dp)
             .clickable{
-                navController.navigate(appInd)
+                navController.navigate(app.id) // Индекс нужен для дальнейшей навигации
             }){
-        ShowIcon(app.iconUrl)
+        ShowIcon(app.appData.iconUrl)
         Spacer(Modifier.padding(5.dp))
-        ShowDescription(app)
+        ShowDescription(app.appData)
     }
 }
 

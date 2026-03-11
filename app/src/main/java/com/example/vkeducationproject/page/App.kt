@@ -14,3 +14,9 @@ data class App(
     val screenshotUrlList: List<String> = listOf(iconUrl),
     val description: String,
 )
+
+// В будущем будет измененно, когда перейдём к api
+data class AppWithId(
+    val appData: App,
+    val id: String
+)

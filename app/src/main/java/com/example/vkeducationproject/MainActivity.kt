@@ -28,6 +28,7 @@ import androidx.navigation.NavHostController
 import com.example.vkeducationproject.navigate.AppNavigation
 import com.example.vkeducationproject.navigate.AppViewModel
 import com.example.vkeducationproject.page.App
+import com.example.vkeducationproject.page.AppWithId
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainDisplay(navController: NavHostController,
                 viewModel: AppViewModel){
+
     // Тестовые данные для отображения
     val data = makeData(
         titles = titles,
@@ -53,15 +55,24 @@ fun MainDisplay(navController: NavHostController,
         companies = companies,
         ageRatings = ageRatings,
         sizes = sizes)
-    val appIds = data.map{app -> viewModel.addInRepository(app)}.toList()
+
+    // Список готовых для работы данных (данные о приложении, его id)
+    val appIds = data.map{app -> AppWithId(
+        id=viewModel.addInRepository(app),
+        appData = app
+    )
+        }.toList()
+
+    // Отрисовка главного экрана
     Column{
         ShowTitleRuStore()
-        ShowScrollAppsColumn(data, appIds, navController)
+        ShowScrollAppsColumn(appIds, navController)
     }
 
 }
+
 @Composable
-fun ShowScrollAppsColumn(data: List<App>, appsId: List<String>, navController: NavHostController){
+fun ShowScrollAppsColumn(data: List<AppWithId>, navController: NavHostController){
     // Делаю изгиб с помощью двух Box
     Box(
         modifier = Modifier
@@ -83,7 +94,6 @@ fun ShowScrollAppsColumn(data: List<App>, appsId: List<String>, navController: N
                 items(data.indices.toList()){appIndex ->
                     ShowAppPage(
                         app = data[appIndex],
-                        appInd = appsId[appIndex],
                         navController = navController)
                 }
             }
@@ -105,7 +115,7 @@ fun ShowTitleRuStore(){
             Icon(
                 imageVector = Icons.Filled.Menu,
                 modifier = Modifier.padding(10.dp),
-                contentDescription = "Избранное",
+                contentDescription = "Меню",
                 tint = Color.White // Цвет иконки
             )
 
@@ -135,8 +145,7 @@ fun makeData(titles: List<String>,
              ageRatings: List<Int>,
              sizes: List<Float>): List<App>
 {
-    return titles.mapIndexed { index, string ->
-        App(
+    return titles.mapIndexed { index, string -> App(
             name=string,
             iconUrl = icons[index],
             description = descriptions[index],
