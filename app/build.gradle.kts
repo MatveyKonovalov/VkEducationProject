@@ -2,14 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.vkeducationproject"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.vkeducationproject"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -56,4 +57,17 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("io.insert-koin:koin-androidx-compose:4.1.1")
+    implementation("androidx.navigation:navigation-compose:2.9.7")
+
+    implementation("com.google.dagger:dagger:2.48")
+    kapt("com.google.dagger:dagger-compiler:2.48")
+
+    // Для Dagger Android (если используете)
+    implementation("com.google.dagger:dagger-android:2.48")
+    implementation("com.google.dagger:dagger-android-support:2.48")
+    kapt("com.google.dagger:dagger-android-processor:2.48")
+    implementation("androidx.navigation:navigation-compose")
 }
