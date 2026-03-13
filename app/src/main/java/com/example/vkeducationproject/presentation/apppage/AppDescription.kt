@@ -1,4 +1,4 @@
-package com.example.vkeducationproject.page
+package com.example.vkeducationproject.presentation.apppage
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

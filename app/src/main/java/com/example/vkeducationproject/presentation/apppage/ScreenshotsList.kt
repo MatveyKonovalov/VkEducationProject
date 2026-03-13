@@ -1,4 +1,4 @@
-package com.example.vkeducationproject.page
+package com.example.vkeducationproject.presentation.apppage
 
 import com.example.vkeducationproject.ui.theme.VkEducationProjectTheme
 import androidx.compose.foundation.layout.Column

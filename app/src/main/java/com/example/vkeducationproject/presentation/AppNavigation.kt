@@ -1,4 +1,4 @@
-package com.example.vkeducationproject.navigate
+package com.example.vkeducationproject.presentation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -11,24 +11,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.vkeducationproject.MainDisplay
-import com.example.vkeducationproject.page.App
-import com.example.vkeducationproject.page.AppDetailsScreen
+import com.example.vkeducationproject.presentation.models.App
+import com.example.vkeducationproject.presentation.apppage.AppDetailsScreen
+import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
+import kotlin.collections.get
 
-class AppViewModel : ViewModel() {
-    private val appsRepository = mutableMapOf<String, App>()
-    private var lastIndex: Int = 0
 
-    fun addInRepository(app: App): String {
-        lastIndex += 1
-        val id = "$lastIndex"
-        appsRepository[id] = app
-        return "app_page/$id" // Возвращаем валидный id
-    }
-
-    fun getAppById(id: String?): App? {
-        return appsRepository[id]
-    }
-}
 
 class AppNavigation {
     companion object Ways {

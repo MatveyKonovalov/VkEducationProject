@@ -25,10 +25,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavHostController
-import com.example.vkeducationproject.navigate.AppNavigation
-import com.example.vkeducationproject.navigate.AppViewModel
-import com.example.vkeducationproject.page.App
-import com.example.vkeducationproject.page.AppWithId
+import com.example.vkeducationproject.presentation.AppNavigation
+import com.example.vkeducationproject.presentation.data.ageRatings
+import com.example.vkeducationproject.presentation.data.categories
+import com.example.vkeducationproject.presentation.data.companies
+import com.example.vkeducationproject.presentation.data.descriptions
+import com.example.vkeducationproject.presentation.data.sizes
+import com.example.vkeducationproject.presentation.data.titles
+import com.example.vkeducationproject.presentation.data.urls
+import com.example.vkeducationproject.presentation.models.AgeRatings
+import com.example.vkeducationproject.presentation.models.App
+import com.example.vkeducationproject.presentation.models.Category
+import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,7 +52,8 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MainDisplay(navController: NavHostController,
-                viewModel: AppViewModel){
+                viewModel: AppViewModel
+){
 
     // Тестовые данные для отображения
     val data = makeData(
@@ -54,25 +63,21 @@ fun MainDisplay(navController: NavHostController,
         icons = urls,
         companies = companies,
         ageRatings = ageRatings,
-        sizes = sizes)
+        sizes = sizes,)
+    data.forEach { viewModel.addInRepository(it, it.id) }
 
-    // Список готовых для работы данных (данные о приложении, его id)
-    val appIds = data.map{app -> AppWithId(
-        id=viewModel.addInRepository(app),
-        appData = app
-    )
-        }.toList()
+
 
     // Отрисовка главного экрана
     Column{
         ShowTitleRuStore()
-        ShowScrollAppsColumn(appIds, navController)
+        ShowScrollAppsColumn(data, navController)
     }
 
 }
 
 @Composable
-fun ShowScrollAppsColumn(data: List<AppWithId>, navController: NavHostController){
+fun ShowScrollAppsColumn(data: List<App>, navController: NavHostController){
     // Делаю изгиб с помощью двух Box
     Box(
         modifier = Modifier
@@ -136,13 +141,13 @@ fun ShowTitleRuStore(){
 
     }
 }
-@Composable
+
 fun makeData(titles: List<String>,
              descriptions: List<String>,
              icons: List<String>,
              categories: List<Category>,
              companies: List<String>,
-             ageRatings: List<Int>,
+             ageRatings: List<AgeRatings>,
              sizes: List<Float>): List<App>
 {
     return titles.mapIndexed { index, string -> App(
@@ -152,7 +157,7 @@ fun makeData(titles: List<String>,
             category=categories[index],
             developer = companies[index],
             ageRating = ageRatings[index],
-            size = sizes[index])}.toList()
+            size = sizes[index], id="$index")}.toList()
 }
 
 
