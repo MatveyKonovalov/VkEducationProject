@@ -2,13 +2,14 @@ package com.example.vkeducationproject.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.vkeducationproject.presentation.models.AgeRatings
-import com.example.vkeducationproject.presentation.models.App
-import com.example.vkeducationproject.presentation.models.Category
-import com.example.vkeducationproject.presentation.repository.AppRepository
+import com.example.vkeducationproject.data.models.AgeRatings
+import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.data.models.Category
+import com.example.vkeducationproject.data.repository.AppRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,34 @@ class AppViewModel(private val appRepository: AppRepository) : ViewModel() {
     private val _currentApp = MutableStateFlow(getDefaultApp())
     val currentApp: StateFlow<App> = _currentApp.asStateFlow()
 
+    private val _showDescription = MutableStateFlow(false)
+    val showDescription = _showDescription.asStateFlow()
+
+    private val _showToast = MutableStateFlow<String?>(null)
+    val showToast = _showToast.asStateFlow()
+
+    private val _snackbar = MutableSharedFlow<String>()
+    val snackbar = _snackbar.asSharedFlow()
+
+    fun onLogoClick(){
+        viewModelScope.launch{
+            _snackbar.emit("Нажатие на логотип")
+        }
+    }
+
+
+    fun onShareClick(){
+        _showToast.value = "В разработке"
+    }
+    fun onToastShown(){
+        _showToast.value = null
+    }
+    fun onInstallClick(){
+        _showToast.value = "В разработке"
+    }
+    fun onDeveloperClick(){
+        _showToast.value = "В разработке"
+    }
 
     fun loadApps(){
         viewModelScope.launch {
@@ -41,6 +70,9 @@ class AppViewModel(private val appRepository: AppRepository) : ViewModel() {
                 throw Exception("Ошибка при поиске")
             }
         }
+    }
+    fun changeDescriptionStatus(){
+        _showDescription.value = !_showDescription.value
     }
     private fun getDefaultApp(): App = App(
         name = "Гильдия Героев: Экшен ММО РПГ",

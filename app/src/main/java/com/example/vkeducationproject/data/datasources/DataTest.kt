@@ -1,7 +1,7 @@
-package com.example.vkeducationproject.presentation.data
+package com.example.vkeducationproject.data.datasources
 
-import com.example.vkeducationproject.presentation.models.AgeRatings
-import com.example.vkeducationproject.presentation.models.Category
+import com.example.vkeducationproject.data.models.AgeRatings
+import com.example.vkeducationproject.data.models.Category
 
 val titles = listOf(
     "СберБанк Онлайн - с Салютом",

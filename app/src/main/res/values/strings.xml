@@ -15,4 +15,6 @@
     <string name="app_details_error">Произошла непредвиденная ошибка</string>
     <string name="app_details_error_refresh">Перезагрузить</string>
     <string name="under_developement">В процессе разработки</string>
+
+    <string name="rustore">Rustore</string>
 </resources>

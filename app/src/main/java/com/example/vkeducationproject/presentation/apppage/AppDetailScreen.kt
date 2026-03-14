@@ -1,29 +1,14 @@
 package com.example.vkeducationproject.presentation.apppage
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.vkeducationproject.presentation.models.Category
-import com.example.vkeducationproject.R
-import com.example.vkeducationproject.presentation.models.AgeRatings
-import com.example.vkeducationproject.presentation.models.App
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 @Composable
@@ -33,65 +18,85 @@ fun AppDetailsScreen(
     viewModel: AppViewModel,
     onBack: () -> Unit = {}
 ) {
-
+    // Загрузка данных
     LaunchedEffect(id) {
         viewModel.loadAppDetails(id)
     }
 
+    // Наблюдение за состояниями
     val displayApp by viewModel.currentApp.collectAsStateWithLifecycle()
+    val descriptionCollapsed by viewModel.showDescription.collectAsStateWithLifecycle()
+    val toastMessage by viewModel.showToast.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val underDevelopmentText = stringResource(R.string.under_developement)
-    var descriptionCollapsed by remember { mutableStateOf(false) }
 
+    // ✅ ЕДИНСТВЕННОЕ место показа Toast - через ViewModel
+    LaunchedEffect(toastMessage) {
+        toastMessage?.let { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.onToastShown()
+        }
+    }
 
     Column(modifier) {
         Toolbar(
             onBackClick = onBack,
             onShareClick = {
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+                viewModel.onShareClick()  // ✅ View только вызывает метод
             },
         )
+
         Spacer(Modifier.height(8.dp))
+
         AppDetailsHeader(
             app = displayApp,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
+
         Spacer(Modifier.height(16.dp))
+
         InstallButton(
             onClick = {
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+                viewModel.onInstallClick()  // ✅ Правильное имя и вызов
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
+
         Spacer(Modifier.height(12.dp))
+
         ScreenshotsList(
             screenshotUrlList = displayApp.screenshotUrlList,
             contentPadding = PaddingValues(horizontal = 16.dp),
         )
+
         Spacer(Modifier.height(12.dp))
+
         AppDescription(
             description = displayApp.description,
             collapsed = descriptionCollapsed,
             onReadMoreClick = {
-                descriptionCollapsed = true
+                viewModel.changeDescriptionStatus()  // ✅ Правильно
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
         )
+
         Spacer(Modifier.height(12.dp))
+
         HorizontalDivider(
             modifier = Modifier.padding(horizontal = 16.dp),
             color = MaterialTheme.colorScheme.outlineVariant,
         )
+
         Spacer(Modifier.height(12.dp))
+
         Developer(
             name = displayApp.developer,
             onClick = {
-                Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
+                viewModel.onDeveloperClick()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,5 +104,3 @@ fun AppDetailsScreen(
         )
     }
 }
-
-

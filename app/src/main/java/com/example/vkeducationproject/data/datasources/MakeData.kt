@@ -1,6 +1,6 @@
-package com.example.vkeducationproject.presentation.data
+package com.example.vkeducationproject.data.datasources
 
-import com.example.vkeducationproject.presentation.models.App
+import com.example.vkeducationproject.data.models.App
 
 
 
@@ -11,7 +11,7 @@ object MakeTestData {
             name=string,
             iconUrl = urls[index],
             description = descriptions[index],
-            category=categories[index],
+            category= categories[index],
             developer = companies[index],
             ageRating = ageRatings[index],
             size = sizes[index], id="$index")}.toList()

@@ -1,8 +1,8 @@
-package com.example.vkeducationproject.presentation.repository
+package com.example.vkeducationproject.data.repository
 
 
-import com.example.vkeducationproject.presentation.data.MakeTestData
-import com.example.vkeducationproject.presentation.models.App
+import com.example.vkeducationproject.data.datasources.MakeTestData
+import com.example.vkeducationproject.data.models.App
 
 interface AppRepository{
     fun getApps(): List<App>

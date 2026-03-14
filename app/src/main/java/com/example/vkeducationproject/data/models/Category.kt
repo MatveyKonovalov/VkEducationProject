@@ -1,4 +1,4 @@
-package com.example.vkeducationproject.presentation.models
+package com.example.vkeducationproject.data.models
 
 import androidx.annotation.StringRes
 import com.example.vkeducationproject.R

@@ -1,4 +1,4 @@
-package com.example.vkeducationproject
+package com.example.vkeducationproject.presentation.appsmarket
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.vkeducationproject.presentation.models.App
+import com.example.vkeducationproject.R
+import com.example.vkeducationproject.data.models.App
 
 
 @Composable
