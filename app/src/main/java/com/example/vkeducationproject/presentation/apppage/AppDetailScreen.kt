@@ -23,6 +23,7 @@ fun AppDetailsScreen(
         viewModel.loadAppDetails(id)
     }
 
+
     // Наблюдение за состояниями
     val displayApp by viewModel.currentApp.collectAsStateWithLifecycle()
     val descriptionCollapsed by viewModel.showDescription.collectAsStateWithLifecycle()
