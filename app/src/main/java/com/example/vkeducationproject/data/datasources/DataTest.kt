@@ -1,7 +1,6 @@
 package com.example.vkeducationproject.data.datasources
 
-import com.example.vkeducationproject.data.models.AgeRatings
-import com.example.vkeducationproject.data.models.Category
+
 
 val titles = listOf(
     "СберБанк Онлайн - с Салютом",
@@ -22,13 +21,13 @@ val companies = listOf(
     "Vk"
 )
 val ageRatings = listOf(
-    AgeRatings.PEGI3,
-    AgeRatings.PEGI12,
-    AgeRatings.PEGI12,
-    AgeRatings.PEGI16,
-    AgeRatings.PEGI18,
-    AgeRatings.PEGI12,
-    AgeRatings.PEGI7
+    3,
+    12,
+    12,
+    16,
+    18,
+    12,
+    7
 )
 val sizes = listOf(
     150f,
@@ -40,13 +39,13 @@ val sizes = listOf(
     159f
 )
 val categories = listOf(
-    Category.FINANCE,
-    Category.TOOLS,
-    Category.TOOLS,
-    Category.TRANSPORT,
-    Category.TOOLS,
-    Category.TOOLS,
-    Category.TOOLS
+    "Финансы",
+    "Инструменты",
+    "Инструменты",
+    "Транспорт",
+    "Инструменты",
+    "Инструменты",
+    "Инструменты"
 )
 
 val descriptions = listOf(

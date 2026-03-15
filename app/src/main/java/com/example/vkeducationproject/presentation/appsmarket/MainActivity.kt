@@ -8,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.vkeducationproject.ui.theme.VkEducationProjectTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,7 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.vkeducationproject.R
 import com.example.vkeducationproject.presentation.navigation.AppNavigation
-import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.domain.models.App
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 class MainActivity : ComponentActivity() {

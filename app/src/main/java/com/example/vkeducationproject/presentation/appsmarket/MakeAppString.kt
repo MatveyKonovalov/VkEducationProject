@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.vkeducationproject.R
-import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.domain.models.App
 
 
 @Composable

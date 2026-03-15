@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import kotlin.math.roundToInt
 import com.example.vkeducationproject.R
-import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.domain.models.App
 
 @Composable
 fun AppDetailsHeader(

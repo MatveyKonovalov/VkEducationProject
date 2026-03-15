@@ -18,7 +18,7 @@ fun AppDetailsScreen(
     viewModel: AppViewModel,
     onBack: () -> Unit = {}
 ) {
-    // Загрузка данных
+
     LaunchedEffect(id) {
         viewModel.loadAppDetails(id)
     }
@@ -30,7 +30,6 @@ fun AppDetailsScreen(
 
     val context = LocalContext.current
 
- 
     LaunchedEffect(toastMessage) {
         toastMessage?.let { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -42,7 +41,7 @@ fun AppDetailsScreen(
         Toolbar(
             onBackClick = onBack,
             onShareClick = {
-                viewModel.onShareClick()  
+                viewModel.onShareClick()
             },
         )
 
@@ -57,7 +56,7 @@ fun AppDetailsScreen(
 
         InstallButton(
             onClick = {
-                viewModel.onInstallClick()  
+                viewModel.onInstallClick()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +76,7 @@ fun AppDetailsScreen(
             description = displayApp.description,
             collapsed = descriptionCollapsed,
             onReadMoreClick = {
-                viewModel.changeDescriptionStatus()  
+                viewModel.changeDescriptionStatus()
             },
             modifier = Modifier
                 .fillMaxWidth()
