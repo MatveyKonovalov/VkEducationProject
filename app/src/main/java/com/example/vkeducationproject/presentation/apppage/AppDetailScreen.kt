@@ -30,7 +30,7 @@ fun AppDetailsScreen(
 
     val context = LocalContext.current
 
-    // ✅ ЕДИНСТВЕННОЕ место показа Toast - через ViewModel
+ 
     LaunchedEffect(toastMessage) {
         toastMessage?.let { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -42,7 +42,7 @@ fun AppDetailsScreen(
         Toolbar(
             onBackClick = onBack,
             onShareClick = {
-                viewModel.onShareClick()  // ✅ View только вызывает метод
+                viewModel.onShareClick()  
             },
         )
 
@@ -57,7 +57,7 @@ fun AppDetailsScreen(
 
         InstallButton(
             onClick = {
-                viewModel.onInstallClick()  // ✅ Правильное имя и вызов
+                viewModel.onInstallClick()  
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +77,7 @@ fun AppDetailsScreen(
             description = displayApp.description,
             collapsed = descriptionCollapsed,
             onReadMoreClick = {
-                viewModel.changeDescriptionStatus()  // ✅ Правильно
+                viewModel.changeDescriptionStatus()  
             },
             modifier = Modifier
                 .fillMaxWidth()
