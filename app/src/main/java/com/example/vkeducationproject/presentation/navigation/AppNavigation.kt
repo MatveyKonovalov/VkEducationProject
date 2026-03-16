@@ -26,7 +26,7 @@ class AppNavigation {
     ) {
         val navController = rememberNavController()
         val viewModel: AppViewModel = viewModel(
-            factory = AppViewModelFactory(AppRepositoryImpl())
+            factory = AppViewModelFactory()
         )
 
         NavHost(

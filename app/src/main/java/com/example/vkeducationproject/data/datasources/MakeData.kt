@@ -1,13 +1,14 @@
 package com.example.vkeducationproject.data.datasources
 
-import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.data.dtomodels.AppDto
 
 
 
-object MakeTestData {
-    fun makeData(): List<App>
+
+class MakeTestData {
+    fun makeData(): List<AppDto>
     {
-        return titles.mapIndexed { index, string -> App(
+        return titles.mapIndexed { index, string -> AppDto(
             name=string,
             iconUrl = urls[index],
             description = descriptions[index],
