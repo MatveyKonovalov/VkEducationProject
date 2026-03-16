@@ -1,10 +1,10 @@
-package com.example.vkeducationproject
+package com.example.vkeducationproject.presentation.appsmarket
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,57 +22,68 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.vkeducationproject.navigate.AppNavigation
-import com.example.vkeducationproject.navigate.AppViewModel
-import com.example.vkeducationproject.page.App
-import com.example.vkeducationproject.page.AppWithId
+import com.example.vkeducationproject.R
+import com.example.vkeducationproject.presentation.navigation.AppNavigation
+import com.example.vkeducationproject.data.models.App
+import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-            VkEducationProjectTheme {
-                AppNavigation().NavigationGraph()
-            }
+
+            AppNavigation().NavigationGraph()
+
         }
     }
 }
 @Composable
 fun MainDisplay(navController: NavHostController,
-                viewModel: AppViewModel){
-
-    // Тестовые данные для отображения
-    val data = makeData(
-        titles = titles,
-        descriptions = descriptions,
-        categories = categories,
-        icons = urls,
-        companies = companies,
-        ageRatings = ageRatings,
-        sizes = sizes)
-
-    // Список готовых для работы данных (данные о приложении, его id)
-    val appIds = data.map{app -> AppWithId(
-        id=viewModel.addInRepository(app),
-        appData = app
-    )
-        }.toList()
-
-    // Отрисовка главного экрана
-    Column{
-        ShowTitleRuStore()
-        ShowScrollAppsColumn(appIds, navController)
+                viewModel: AppViewModel
+){
+    LaunchedEffect(Unit) {
+        viewModel.loadApps()
     }
+    // Тестовые данные для отображения
+    val data by viewModel.apps.collectAsStateWithLifecycle()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.snackbar.collect{message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+    // Отрисовка главного экрана
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState)}){
+        paddingValues ->
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = paddingValues.calculateBottomPadding())){
+            ShowTitleRuStore(
+                onClickLogo = {viewModel.onLogoClick()}
+            )
+            ShowScrollAppsColumn(data, navController)
+        }
+    }
+
 
 }
 
 @Composable
-fun ShowScrollAppsColumn(data: List<AppWithId>, navController: NavHostController){
+fun ShowScrollAppsColumn(data: List<App>, navController: NavHostController){
     // Делаю изгиб с помощью двух Box
     Box(
         modifier = Modifier
@@ -94,7 +105,8 @@ fun ShowScrollAppsColumn(data: List<AppWithId>, navController: NavHostController
                 items(data.indices.toList()){appIndex ->
                     ShowAppPage(
                         app = data[appIndex],
-                        navController = navController)
+                        navController = navController
+                    )
                 }
             }
         }
@@ -103,7 +115,7 @@ fun ShowScrollAppsColumn(data: List<AppWithId>, navController: NavHostController
 
 }
 @Composable
-fun ShowTitleRuStore(){
+fun ShowTitleRuStore(onClickLogo: () -> Unit){
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(100.dp)
@@ -119,9 +131,10 @@ fun ShowTitleRuStore(){
                 tint = Color.White // Цвет иконки
             )
 
-            Text("RuStore",
+            Text(
+                stringResource(R.string.rustore),
                 color = Color.White,
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(10.dp).clickable{onClickLogo()},
                 fontSize = 28.sp)
 
             Spacer(Modifier.weight(1f))
@@ -135,24 +148,6 @@ fun ShowTitleRuStore(){
             }
 
     }
-}
-@Composable
-fun makeData(titles: List<String>,
-             descriptions: List<String>,
-             icons: List<String>,
-             categories: List<Category>,
-             companies: List<String>,
-             ageRatings: List<Int>,
-             sizes: List<Float>): List<App>
-{
-    return titles.mapIndexed { index, string -> App(
-            name=string,
-            iconUrl = icons[index],
-            description = descriptions[index],
-            category=categories[index],
-            developer = companies[index],
-            ageRating = ageRatings[index],
-            size = sizes[index])}.toList()
 }
 
 

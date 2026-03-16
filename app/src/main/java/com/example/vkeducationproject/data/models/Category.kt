@@ -1,6 +1,7 @@
-package com.example.vkeducationproject
+package com.example.vkeducationproject.data.models
 
 import androidx.annotation.StringRes
+import com.example.vkeducationproject.R
 
 enum class Category(@StringRes val categoryId: Int){
     FINANCE(R.string.category_name_finance),

@@ -58,16 +58,19 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    implementation("io.insert-koin:koin-androidx-compose:4.1.1")
-    implementation("androidx.navigation:navigation-compose:2.9.7")
-
-    implementation("com.google.dagger:dagger:2.48")
-    kapt("com.google.dagger:dagger-compiler:2.48")
-
-    // Для Dagger Android (если используете)
-    implementation("com.google.dagger:dagger-android:2.48")
-    implementation("com.google.dagger:dagger-android-support:2.48")
-    kapt("com.google.dagger:dagger-android-processor:2.48")
-    implementation("androidx.navigation:navigation-compose")
+    // Coil
+    implementation(libs.coil.compose)
+    // Koin
+    implementation(libs.koin.androidx.compose)
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    // Dagger Core
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    // Dagger Android
+    implementation(libs.dagger.android)
+    implementation(libs.dagger.android.support)
+    kapt(libs.dagger.android.processor)
+    // Material 3
+    implementation(libs.androidx.compose.material3)
 }
