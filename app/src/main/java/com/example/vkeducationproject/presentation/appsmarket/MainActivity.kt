@@ -35,16 +35,18 @@ import androidx.navigation.NavHostController
 import com.example.vkeducationproject.R
 import com.example.vkeducationproject.presentation.navigation.AppNavigation
 import com.example.vkeducationproject.domain.models.App
+import com.example.vkeducationproject.presentation.navigation.NavigationGraph
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-
-            AppNavigation().NavigationGraph()
-
+            NavigationGraph()
         }
     }
 }

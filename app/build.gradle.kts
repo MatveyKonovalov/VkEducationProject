@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -73,4 +75,8 @@ dependencies {
     kapt(libs.dagger.android.processor)
     // Material 3
     implementation(libs.androidx.compose.material3)
+
+    implementation("com.google.dagger:hilt-android:2.56")
+    kapt("com.google.dagger:hilt-android-compiler:2.56")
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 }

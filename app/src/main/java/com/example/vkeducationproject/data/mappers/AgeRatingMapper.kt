@@ -1,8 +1,9 @@
 package com.example.vkeducationproject.data.mappers
 
 import com.example.vkeducationproject.domain.models.AgeRatings
+import javax.inject.Inject
 
-class AgeRatingMapper() {
+class AgeRatingMapper @Inject constructor() {
     fun toDomain(age: Int): AgeRatings {
         return when (age){
             in 3 until 7 -> AgeRatings.PEGI3
