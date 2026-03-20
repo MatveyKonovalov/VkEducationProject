@@ -75,9 +75,6 @@ class AppViewModel @Inject constructor(
             try {
                 val app = appRepository.getAppById(id)
                 _currentApp.value = app
-                if (_currentApp.value == null) {
-                    _currentApp.value = appRepository.getAppById("")
-                }
             } catch (e: Exception) {
                 _showToast.value = "Ошибка при загрузке приложения"
             }

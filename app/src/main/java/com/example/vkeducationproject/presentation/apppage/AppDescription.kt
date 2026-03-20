@@ -50,7 +50,7 @@ fun AppDescription(
 private fun PreviewShort() {
     VkEducationProjectTheme  {
         AppDescription(
-            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
+            description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и сразите мастера подземелья!",
             onReadMoreClick = {},
             collapsed = false,
         )

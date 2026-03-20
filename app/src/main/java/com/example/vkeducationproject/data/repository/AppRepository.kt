@@ -2,7 +2,6 @@ package com.example.vkeducationproject.data.repository
 
 
 import com.example.vkeducationproject.data.datasources.MakeTestData
-import com.example.vkeducationproject.data.mappers.AgeRatingMapper
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.domain.AppRepository
 import com.example.vkeducationproject.domain.models.AgeRatings
@@ -14,8 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class AppRepositoryImpl @Inject constructor(
     private val data: MakeTestData,
-    private val mapper: AppMapper,
-    private val ageRatingMapper: AgeRatingMapper
+    private val mapper: AppMapper
 ): AppRepository {
     private val appsRepository = mutableMapOf<String, App>()
 
