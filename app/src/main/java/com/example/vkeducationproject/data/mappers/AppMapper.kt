@@ -2,10 +2,10 @@ package com.example.vkeducationproject.data.mappers
 
 import com.example.vkeducationproject.data.dtomodels.AppDto
 import com.example.vkeducationproject.domain.models.App
-import org.koin.core.component.getScopeId
+import javax.inject.Inject
 
 // Пусть с бекенда возраст передаётся числом и категория передаётся строкой
-class AppMapper(
+class AppMapper @Inject constructor(
     private val ageRatingMapper: AgeRatingMapper,
     private val categoryMapper: CategoryMapper
 ) {
@@ -20,4 +20,5 @@ class AppMapper(
         description = dto.description,
         id = dto.id
     )
+
 }

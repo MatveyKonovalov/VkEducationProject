@@ -1,18 +1,19 @@
 package com.example.vkeducationproject.data.repository
 
 
-import android.service.autofill.Dataset
 import com.example.vkeducationproject.data.datasources.MakeTestData
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.domain.AppRepository
 import com.example.vkeducationproject.domain.models.AgeRatings
 import com.example.vkeducationproject.domain.models.App
 import com.example.vkeducationproject.domain.models.Category
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class AppRepositoryImpl(
-    private val mapper: AppMapper,
-    private val data: MakeTestData
+@Singleton
+class AppRepositoryImpl @Inject constructor(
+    private val data: MakeTestData,
+    private val mapper: AppMapper
 ): AppRepository {
     private val appsRepository = mutableMapOf<String, App>()
 
