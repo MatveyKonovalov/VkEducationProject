@@ -1,11 +1,10 @@
 package com.example.vkeducationproject.data.datasources
 
 import com.example.vkeducationproject.data.dtomodels.AppDto
+import javax.inject.Inject
 
 
-
-
-class MakeTestData {
+class MakeTestData @Inject constructor() {
     fun makeData(): List<AppDto>
     {
         return titles.mapIndexed { index, string -> AppDto(
