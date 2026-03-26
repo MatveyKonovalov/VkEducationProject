@@ -2,8 +2,6 @@
     <string name="app_name">VkEducation</string>
 
 
-    <string name="category_app">Приложения</string>
-    <string name="category_game">Игры</string>
     <string name="app_details_age">Возраст</string>
     <string name="app_details_size">Размер</string>
     <string name="install">Установить</string>

@@ -2,33 +2,19 @@ package com.example.vkeducationproject.data.dtomodels
 
 import com.google.gson.annotations.SerializedName
 
-
-data class AppDto(
+data class AppInMarketDto(
     @SerializedName("id")
     val id: String,
 
     @SerializedName("name")
     val name: String,
 
-    @SerializedName("developer")
-    val developer: String,
-
     @SerializedName("category")
     val category: String,
-
-    @SerializedName("ageRating")
-    val ageRating: Int,
-
-    @SerializedName("size")
-    val size: Float,
 
     @SerializedName("iconUrl")
     val iconUrl: String,
 
-    @SerializedName("screenshotUrlList")
-    val screenshotUrlList: List<String>,
-
     @SerializedName("description")
-    val description: String,
+    val description: String
 )
-
