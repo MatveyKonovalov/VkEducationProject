@@ -2,31 +2,38 @@ package com.example.vkeducationproject.data.repository
 
 
 import com.example.vkeducationproject.data.datasources.MakeTestData
+import com.example.vkeducationproject.data.mappers.AppInMarketMapper
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.domain.AppRepository
 import com.example.vkeducationproject.domain.models.AgeRatings
 import com.example.vkeducationproject.domain.models.App
+import com.example.vkeducationproject.domain.models.AppInMarket
 import com.example.vkeducationproject.domain.models.Category
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppRepositoryImpl @Inject constructor(
-    private val data: MakeTestData,
-    private val mapper: AppMapper
+    private val mapper: AppMapper,
+    private val mapperInMarket: AppInMarketMapper
 ): AppRepository {
-    private val appsRepository = mutableMapOf<String, App>()
+    private val appsRepository = mutableMapOf<String, AppInMarket>()
 
     init{
-        loadData()
+        runBlocking {
+            loadData()
+        }
+
     }
     // Загрузка данных(в реализации кэширует результат)
-    private fun loadData(){
+    private suspend fun loadData(){
         try{
-            val dataDto = data.makeData()
-
+            val dataDto = MakeTestData.makeData()
+            println(dataDto[0].name)
             val dataDomain = dataDto.map{appDto->
-                mapper.toDomain(appDto)}
+                mapperInMarket.toDomain(appDto)}
+
 
             dataDomain.forEach { app ->
                 appsRepository[app.id] = app}
@@ -38,12 +45,23 @@ class AppRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getApps(): List<App> {
+    override fun getApps(): List<AppInMarket> {
         return appsRepository.values.toList()
     }
 
     override fun getAppById(id: String): App{
-        return appsRepository[id] ?: getDefaultApp()
+        var result: App
+        runBlocking {
+            try{
+                val appDto = MakeTestData.getAppById(id)
+                val dataDomain = mapper.toDomain(appDto)
+                result =  dataDomain
+            } catch (e: Exception){
+                result = getDefaultApp()
+            }
+
+        }
+        return result
     }
     private fun getDefaultApp(): App = App(
         name = "Гильдия Героев: Экшен ММО РПГ",

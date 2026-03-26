@@ -35,6 +35,7 @@ import androidx.navigation.NavHostController
 import com.example.vkeducationproject.R
 import com.example.vkeducationproject.presentation.navigation.AppNavigation
 import com.example.vkeducationproject.domain.models.App
+import com.example.vkeducationproject.domain.models.AppInMarket
 import com.example.vkeducationproject.presentation.navigation.NavigationGraph
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,7 +85,7 @@ fun MainDisplay(navController: NavHostController,
 }
 
 @Composable
-fun ShowScrollAppsColumn(data: List<App>, navController: NavHostController){
+fun ShowScrollAppsColumn(data: List<AppInMarket>, navController: NavHostController){
     // Делаю изгиб с помощью двух Box
     Box(
         modifier = Modifier

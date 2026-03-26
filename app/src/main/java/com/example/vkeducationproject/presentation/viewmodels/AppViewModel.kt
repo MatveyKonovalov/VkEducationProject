@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vkeducationproject.domain.models.App
 import com.example.vkeducationproject.domain.AppRepository
+import com.example.vkeducationproject.domain.models.AppInMarket
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +20,8 @@ class AppViewModel @Inject constructor(
     private val appRepository: AppRepository
 ) : ViewModel() {
 
-    private val _apps = MutableStateFlow<List<App>>(emptyList())
-    val apps: StateFlow<List<App>> = _apps.asStateFlow()
+    private val _apps = MutableStateFlow<List<AppInMarket>>(emptyList())
+    val apps: StateFlow<List<AppInMarket>> = _apps.asStateFlow()
 
     private val _currentApp = MutableStateFlow<App>(appRepository.getAppById(""))
     val currentApp: StateFlow<App> = _currentApp.asStateFlow()

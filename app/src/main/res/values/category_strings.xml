@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Категории для enum класса -->
-    <string name="category_name_finance">Финансы</string>
-    <string name="category_name_transport">Транспорт</string>
-    <string name="category_name_game">Игры</string>
-    <string name="category_name_tools">Инструменты</string>
+    <string name="category_app">Приложения</string>
+    <string name="category_game">Игры</string>
+    <string name="category_productivity">Производительность</string>
+    <string name="category_social">Социальные сети</string>
+    <string name="category_education">Образование</string>
+    <string name="category_entertainment">Развлечения</string>
+    <string name="category_music">Музыка</string>
+    <string name="category_video">Видео</string>
+    <string name="category_photography">Фотография</string>
+    <string name="category_health">Здоровье</string>
+    <string name="category_sports">Спорт</string>
+    <string name="category_news">Новости</string>
+    <string name="category_books">Книги</string>
+    <string name="category_business">Бизнес</string>
+    <string name="category_finance">Финансы</string>
+    <string name="category_travel">Путешествия</string>
+    <string name="category_maps">Карты</string>
+    <string name="category_food">Еда</string>
+    <string name="category_shopping">Покупки</string>
+    <string name="category_utilities">Утилиты</string>
+    <string name="category_other">Другое</string>
+
+    <string name="category_health_fitness">Здоровье и фитнес</string>
+    <string name="category_photo_video">Фото и видео</string>
+    <string name="category_food_drink">Еда и напитки</string>
+    <string name="category_lifestyle">Образ жизни</string>
+    <string name="category_navigation">Навигация</string>
+    <string name="category_communication">Общение</string>
+    <string name="category_weather">Погода</string>
+    <string name="category_books_reference">Книги и справочники</string>
 </resources>

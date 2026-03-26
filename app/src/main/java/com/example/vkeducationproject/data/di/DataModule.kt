@@ -1,7 +1,7 @@
 package com.example.vkeducationproject.data.di
 
-import com.example.vkeducationproject.data.datasources.MakeTestData
 import com.example.vkeducationproject.data.mappers.AgeRatingMapper
+import com.example.vkeducationproject.data.mappers.AppInMarketMapper
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.data.mappers.CategoryMapper
 import com.example.vkeducationproject.data.repository.AppRepositoryImpl
@@ -18,11 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class DataModule{
     companion object{
-        @Provides
-        @Singleton
-        fun provideMakeTestData(): MakeTestData{
-            return MakeTestData()
-        }
+
         @Provides
         @Singleton
         fun provideAgeRatingMapper(): AgeRatingMapper = AgeRatingMapper()
@@ -37,6 +33,12 @@ abstract class DataModule{
             ageRatingMapper: AgeRatingMapper,
             categoryMapper: CategoryMapper
         ): AppMapper = AppMapper(ageRatingMapper, categoryMapper)
+
+        @Provides
+        @Singleton
+        fun provideAppInMarket(
+            categoryMapper: CategoryMapper
+        ): AppInMarketMapper = AppInMarketMapper(categoryMapper)
     }
 
 

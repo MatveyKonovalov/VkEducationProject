@@ -20,6 +20,9 @@ fun AppDetailsScreen(
 ) {
 
     LaunchedEffect(id) {
+        if (viewModel.showDescription.value){
+            viewModel.changeDescriptionStatus()
+        }
         viewModel.loadAppDetails(id)
     }
 

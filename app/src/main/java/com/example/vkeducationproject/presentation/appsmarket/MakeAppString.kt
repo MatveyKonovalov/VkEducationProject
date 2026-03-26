@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.vkeducationproject.R
 import com.example.vkeducationproject.domain.models.App
+import com.example.vkeducationproject.domain.models.AppInMarket
 
 
 @Composable
@@ -33,7 +34,7 @@ private fun ShowIcon(iconUrl: String) {
 }
 
 @Composable
-private fun ShowDescription(app: App){
+private fun ShowDescription(app: AppInMarket){
     Column{
         // Вывод названия приложения
         Text(app.name,
@@ -51,7 +52,7 @@ private fun ShowDescription(app: App){
     }
 }
 @Composable
-fun ShowAppPage(app: App, navController: NavHostController){
+fun ShowAppPage(app: AppInMarket, navController: NavHostController){
     Row(horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
