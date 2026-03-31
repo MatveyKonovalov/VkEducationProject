@@ -1,7 +1,8 @@
 package com.example.vkeducationproject.data.repository
 
-
 import com.example.vkeducationproject.data.datasources.MakeTestData
+import com.example.vkeducationproject.data.datasources.local.AppDetailsDao
+import com.example.vkeducationproject.data.datasources.local.AppDetailsEntityMapper
 import com.example.vkeducationproject.data.mappers.AppInMarketMapper
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.domain.AppRepository
@@ -9,61 +10,63 @@ import com.example.vkeducationproject.domain.models.AgeRatings
 import com.example.vkeducationproject.domain.models.App
 import com.example.vkeducationproject.domain.models.AppInMarket
 import com.example.vkeducationproject.domain.models.Category
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppRepositoryImpl @Inject constructor(
     private val mapper: AppMapper,
-    private val mapperInMarket: AppInMarketMapper
-): AppRepository {
-    private val appsRepository = mutableMapOf<String, AppInMarket>()
+    private val mapperInMarket: AppInMarketMapper,
+    private val makeTest: MakeTestData,
+    private val dao: AppDetailsDao,
+    private val mapperEntity: AppDetailsEntityMapper
+) : AppRepository {
 
-    init{
-        runBlocking {
-            loadData()
-        }
+    private var appsCache: List<AppInMarket>? = null
 
-    }
-    // Загрузка данных(в реализации кэширует результат)
-    private suspend fun loadData(){
-        try{
-            val dataDto = MakeTestData.makeData()
-            println(dataDto[0].name)
-            val dataDomain = dataDto.map{appDto->
-                mapperInMarket.toDomain(appDto)}
-
-
-            dataDomain.forEach { app ->
-                appsRepository[app.id] = app}
-
-            println("Repository now has: ${appsRepository.size} items")
-
-        } catch (e: Exception){
-            println("Failed to load apps: ${e.message}")
-        }
-    }
-
-    override fun getApps(): List<AppInMarket> {
-        return appsRepository.values.toList()
-    }
-
-    override fun getAppById(id: String): App{
-        var result: App
-        runBlocking {
-            try{
-                val appDto = MakeTestData.getAppById(id)
-                val dataDomain = mapper.toDomain(appDto)
-                result =  dataDomain
-            } catch (e: Exception){
-                result = getDefaultApp()
+    private suspend fun loadData(): List<AppInMarket> {
+        return appsCache ?: runCatching {
+            val dataDto = makeTest.makeData()
+            val dataDomain = dataDto.map { appDto ->
+                mapperInMarket.toDomain(appDto)
             }
-
+            appsCache = dataDomain
+            dataDomain
+        }.getOrElse {
+            println("Failed to load apps: ${it.message}")
+            emptyList()
         }
-        return result
     }
-    private fun getDefaultApp(): App = App(
+
+    override suspend fun getApps(): List<AppInMarket> {
+        return loadData()
+    }
+
+    override suspend fun getAppById(id: String): App {
+        return try {
+            val appInDatabase = dao.getApp(id)
+
+            if (appInDatabase.isNotEmpty()) {
+                mapperEntity.toDomain(appInDatabase.first())
+            } else {
+                val appDto = makeTest.getAppById(id)
+                val dataDomain = mapper.toDomain(appDto)
+
+                withContext(Dispatchers.IO) {
+                    dao.insert(mapperEntity.toEntity(dataDomain))
+                }
+
+                dataDomain
+            }
+        } catch (exception: Exception) {
+            println("Error getting app by id $id: ${exception.message}")
+            getDefaultApp()
+        }
+    }
+
+    override fun getDefaultApp(): App = App(
         name = "Гильдия Героев: Экшен ММО РПГ",
         developer = "VK Play",
         category = Category.GAME,
@@ -77,7 +80,6 @@ class AppRepositoryImpl @Inject constructor(
         ),
         iconUrl = "https://static.rustore.ru/imgproxy/APsbtHxkVa4MZ0DXjnIkSwFQ_KVIcqHK9o3gHY6pvOQ/preset:web_app_icon_62/plain/https://static.rustore.ru/apk/393868735/content/ICON/3f605e3e-f5b3-434c-af4d-77bc5f38820e.png@webp",
         description = "Легендарный рейд героев в Фэнтези РПГ. Станьте героем гильдии и зразите мастера подземелья!",
-        id="1",
+        id = "1",
     )
-
 }

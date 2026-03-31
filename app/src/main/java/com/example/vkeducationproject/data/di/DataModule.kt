@@ -1,7 +1,8 @@
 package com.example.vkeducationproject.data.di
 
+import com.example.vkeducationproject.data.datasources.MakeTestData
+import com.example.vkeducationproject.data.datasources.local.AppDetailsEntityMapper
 import com.example.vkeducationproject.data.mappers.AgeRatingMapper
-import com.example.vkeducationproject.data.mappers.AppInMarketMapper
 import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.data.mappers.CategoryMapper
 import com.example.vkeducationproject.data.repository.AppRepositoryImpl
@@ -36,9 +37,13 @@ abstract class DataModule{
 
         @Provides
         @Singleton
-        fun provideAppInMarket(
-            categoryMapper: CategoryMapper
-        ): AppInMarketMapper = AppInMarketMapper(categoryMapper)
+        fun provideAppDetailsEntityMapper(
+            ageRatingMapper: AgeRatingMapper
+        ): AppDetailsEntityMapper = AppDetailsEntityMapper(ageRatingMapper)
+
+        @Provides
+        @Singleton
+        fun provideMakeData(): MakeTestData = MakeTestData()
     }
 
 

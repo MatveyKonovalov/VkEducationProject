@@ -13,4 +13,13 @@ class AgeRatingMapper @Inject constructor() {
             else -> AgeRatings.PEGI18
         }
     }
+    fun toEntity(age: AgeRatings): Int{
+        return when (age){
+            AgeRatings.PEGI3 -> 3
+            AgeRatings.PEGI7 -> 7
+            AgeRatings.PEGI12 -> 12
+            AgeRatings.PEGI16 -> 16
+            AgeRatings.PEGI18 -> 18
+        }
+    }
 }
