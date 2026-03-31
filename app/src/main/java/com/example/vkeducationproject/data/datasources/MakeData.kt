@@ -4,10 +4,10 @@ import com.example.vkeducationproject.data.dtomodels.AppDto
 import com.example.vkeducationproject.data.dtomodels.AppInMarketDto
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 
-
-object MakeTestData{
+class MakeTestData @Inject constructor(){
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://185.103.109.134/")
         .addConverterFactory(GsonConverterFactory.create())

@@ -23,7 +23,7 @@ class AppViewModel @Inject constructor(
     private val _apps = MutableStateFlow<List<AppInMarket>>(emptyList())
     val apps: StateFlow<List<AppInMarket>> = _apps.asStateFlow()
 
-    private val _currentApp = MutableStateFlow<App>(appRepository.getAppById(""))
+    private val _currentApp = MutableStateFlow<App>(appRepository.getDefaultApp())
     val currentApp: StateFlow<App> = _currentApp.asStateFlow()
 
     private val _showDescription = MutableStateFlow(false)
@@ -34,6 +34,12 @@ class AppViewModel @Inject constructor(
 
     private val _snackbar = MutableSharedFlow<String>()
     val snackbar = _snackbar.asSharedFlow()
+
+    private fun fetchApp(id: String) {
+        viewModelScope.launch {
+            _currentApp.value = appRepository.getAppById(id)
+        }
+    }
 
     init {
         loadApps()
