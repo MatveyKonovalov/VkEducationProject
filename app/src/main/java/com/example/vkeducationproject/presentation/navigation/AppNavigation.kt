@@ -1,7 +1,9 @@
 package com.example.vkeducationproject.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.vkeducationproject.presentation.apppage.AppDetailsScreen
 import com.example.vkeducationproject.presentation.appsmarket.MainDisplay
+import com.example.vkeducationproject.presentation.viewmodels.AppDetailsViewModel
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 object AppNavigation {
@@ -25,6 +28,8 @@ fun NavigationGraph(
     val navController = rememberNavController()
 
     val sharedViewModel: AppViewModel = viewModel()
+
+
     NavHost(
         navController = navController,
         startDestination = AppNavigation.HOME_PAGE,
@@ -47,9 +52,15 @@ fun NavigationGraph(
             )
         ) { backStackEntry ->
             val appId = backStackEntry.arguments?.getString(AppNavigation.PARAM_APP_ID) ?: ""
+            val appDetailsViewModel: AppDetailsViewModel = hiltViewModel()
+
+            LaunchedEffect(appId) {
+                println(appId)
+                appDetailsViewModel.loadAppDetails(appId)
+                println(appDetailsViewModel.currentApp)
+            }
             AppDetailsScreen(
-                id = appId,
-                viewModel = sharedViewModel,
+                viewModel = appDetailsViewModel,
                 onBack = { navController.popBackStack() }
             )
 
