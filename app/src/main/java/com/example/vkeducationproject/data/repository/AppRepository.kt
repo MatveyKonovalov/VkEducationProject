@@ -66,6 +66,11 @@ class AppRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun toggleWishlist(id: String) {
+        val prevStatus = dao.getApp(id).first().isInWishlist
+        dao.updateWishlistStatus(id, !prevStatus)
+    }
+
     override fun getDefaultApp(): App = App(
         name = "Гильдия Героев: Экшен ММО РПГ",
         developer = "VK Play",

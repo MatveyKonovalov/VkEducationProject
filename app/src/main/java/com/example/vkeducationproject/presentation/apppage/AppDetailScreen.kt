@@ -9,23 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.vkeducationproject.presentation.viewmodels.AppDetailsViewModel
 import com.example.vkeducationproject.presentation.viewmodels.AppViewModel
 
 @Composable
 fun AppDetailsScreen(
     modifier: Modifier = Modifier,
-    id: String,
-    viewModel: AppViewModel,
+    viewModel: AppDetailsViewModel,
     onBack: () -> Unit = {}
 ) {
-
-    LaunchedEffect(id) {
-        if (viewModel.showDescription.value){
-            viewModel.changeDescriptionStatus()
-        }
-        viewModel.loadAppDetails(id)
-    }
-
 
     // Наблюдение за состояниями
     val displayApp by viewModel.currentApp.collectAsStateWithLifecycle()
@@ -47,6 +39,8 @@ fun AppDetailsScreen(
             onShareClick = {
                 viewModel.onShareClick()
             },
+            viewModel = viewModel,
+            onWishClick = {viewModel.onWishClick()}
         )
 
         Spacer(Modifier.height(8.dp))

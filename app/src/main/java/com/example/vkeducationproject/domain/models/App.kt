@@ -11,7 +11,8 @@ data class App(
     val iconUrl: String,
     val screenshotUrlList: List<String> = emptyList(),
     val description: String,
-    val id: String
+    val id: String,
+    var isInWishList: Boolean = false
 ){
     init{
         require(name.isNotBlank()){"App name cannot be blank"}
