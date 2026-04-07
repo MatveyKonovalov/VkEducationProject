@@ -63,6 +63,7 @@ class AppRepositoryImpl @Inject constructor(
         } catch (exception: Exception) {
             println("Error getting app by id $id: ${exception.message}")
             getDefaultApp()
+
         }
     }
 
