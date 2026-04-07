@@ -7,6 +7,9 @@ import com.example.vkeducationproject.data.mappers.AppMapper
 import com.example.vkeducationproject.data.mappers.CategoryMapper
 import com.example.vkeducationproject.data.repository.AppRepositoryImpl
 import com.example.vkeducationproject.domain.AppRepository
+import com.example.vkeducationproject.domain.usecases.GetAppByIdUseCase
+import com.example.vkeducationproject.domain.usecases.GetAppsUseCase
+import com.example.vkeducationproject.domain.usecases.ToggleWishlistUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -44,6 +47,19 @@ abstract class DataModule{
         @Provides
         @Singleton
         fun provideMakeData(): MakeTestData = MakeTestData()
+
+        @Provides
+        @Singleton
+        fun provideGetUseCse(repository: AppRepository) = GetAppsUseCase(repository)
+
+        @Singleton
+        @Provides
+        fun provideGetAppById(repository: AppRepository) = GetAppByIdUseCase(repository)
+
+        @Provides
+        @Singleton
+        fun provideToggle(repository: AppRepository) = ToggleWishlistUseCase(repository)
+
     }
 
 
